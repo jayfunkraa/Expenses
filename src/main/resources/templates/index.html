@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('expenses')"></head>
+<body>
+<div th:replace="layout :: nav"></div>
+<main role="main" class="container">
+    <div>
+        <h2>Expenses</h2>
+        <a class="mb-2 btn btn-sm btn-primary" href="/expense/add">Add New</a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Merchant</th>
+                <th>Cost</th>
+                <th>Currency</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Client</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="expense : ${expenses}">
+                <td><p th:text="${#temporals.format(expense.date, 'dd/MM/YY')}"></p></td>
+                <td><p th:text="${expense.merchant}"></p></td>
+                <td><p th:text="@{${#numbers.formatDecimal(expense.cost,1,2)}}"></p></td>
+                <td><p th:text="${expense.currency.currency}"></p></td>
+                <td><p th:text="${expense.description}"></p></td>
+                <td><p th:text="${expense.category.name}"></p></td>
+                <td><p th:text="${expense.client.name}"></p></td>
+                <td>
+                    <p>
+                        <i th:class="'ml-2 fas fa-file-invoice ' + (${expense.billable} ? 'text-success' : 'text-muted')"
+                           data-toggle="tooltip" title="Billable"></i>
+                        <i th:class="'ml-2 fas fa-money-bill-wave ' + (${expense.reimbursable} ? 'text-success' : 'text-muted')"
+                           data-toggle="tooltip" title="Reimbursable"></i>
+                    </p>
+                </td>
+                <td>
+                    <a class="text-dark" th:href="@{'/expense/' + ${expense.id}} + '/edit'">
+                        <i class="fas fa-s fa-edit text-dark mr-3" data-toggle="tooltip" title="Edit"></i>
+                    </a>
+                    <a class="open-deleteModal text-dark" href="#" th:data-id="${expense.id}" data-toggle="modal" data-target="#deleteModal">
+                        <i class="fas fa-s fa-trash-alt text-dark" data-toggle="tooltip" title="Delete"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!------ MODAL ------>
+
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete this expense?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <form action="" method="post" id="deleteForm">
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="layout :: scripts"></div>
+<script type="text/javascript">
+$(document).ready(function () {
+    $(document).on("click", ".open-deleteModal", function () {
+        var myExpenseId = $(this).data('id');
+        $(".modal-footer #deleteForm").attr("action","/expense/" + myExpenseId + "/delete");
+    });
+});
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+
+
+</script>
+</body>
+</html>

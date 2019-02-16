@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('expense form')"></head>
+<body>
+<div th:replace="layout :: nav"></div>
+<main role="main" class="container">
+    <h2 th:text="@{${heading} + ' Expense'}"></h2>
+    <form id="expense" th:action="@{${action}}" method="post"
+          th:object="${expense}">
+        <div class="form-row">
+            <input type="hidden" th:field="*{id}">
+            <div class="col-md-3 form-group">
+                <label for="date">Date</label>
+                <input type="date" class="form-control" id="date" th:field="*{date}">
+            </div>
+            <div class="col-md-5 form-group">
+                <label for="merchant">Merchant</label>
+                <input type="text" class="form-control" id="merchant" th:field="*{merchant}">
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="cost">Cost</label>
+                <!-- TODO: force 2 decimal places for cost field-->
+                <input type="number" step="0.01" value="0.00" placeholder="0.00" class="form-control" id="cost"
+                       th:field="*{cost}">
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="currency">Currency</label>
+                <select class="form-control" id="currency" name="currencyId">
+                    <option th:each="currency : ${currencies}" th:text="${currency.currency}"
+                            th:value="${currency.id}" th:selected="${currency.defaultCurrency}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 form-group">
+                <label for="description">Description</label>
+                <input type="text" class="form-control" id="description" th:field="*{description}">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="categoryId">
+                    <option th:each="category : ${categories}" th:text="${category.name}" th:value="${category.id}"
+                            th:selected="${category.defaultCategory}"></option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="client">Client</label>
+                <select class="form-control" id="client" name="clientId">
+                    <option th:each="client : ${clients}" th:text="${client.name}" th:value="${client.id}"
+                            th:selected="${client.defaultClient}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="billable" th:field="*{billable}">
+                    <label for="billable" class="form-check-label">Billable</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="reimbursable" th:field="*{reimbursable}">
+                    <label for="reimbursable" class="form-check-label">Reimbursable</label>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="float-right">
+                    <button type="submit" class="mx-1 btn btn-primary" th:text="${submit}"></button>
+                    <a href="/" class=" mx-1 btn btn-secondary">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>
