@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Reports')"></head>
+<body>
+<div th:replace="layout :: nav('report')"></div>
+<main class="container" role="main">
+    <div>
+        <h2>Reports</h2>
+        <a class="mb-2 btn btn-sm btn-primary" href="/report/add">Add New</a>
+    </div>
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Type</th>
+                <th>Due Date</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="report : ${reports}">
+                <td><p th:text="${report.title}"></p></td>
+                <td><p th:text="${report.type}"></p></td>
+                <td><p th:text="${#temporals.format(report.dueDate, 'dd/MM/YY')}"></p></td>
+                <td>
+                    <p>
+                        <i data-toggle="tooltip"
+                           th:class="'ml-2 fas fa-check-circle ' + (${report.submitted} ? 'text-success' : 'text-muted')" title="Submitted"></i>
+                    </p>
+                </td>
+                <td>
+                    <a class="text-dark" th:href="@{'/report/' + ${report.id}} + '/edit'">
+                        <i class="fas fa-s fa-edit text-dark mr-3" data-toggle="tooltip" title="Edit"></i>
+                    </a>
+                    <a class="open-deleteModal text-dark" data-target="#deleteModal" data-toggle="modal" href="#" th:data-id="${report.id}">
+                        <i class="fas fa-s fa-trash-alt text-dark mr-3" data-toggle="tooltip" title="Delete"></i>
+                    </a>
+                    <a class="text-dark" th:href="@{'/report/' + ${report.id}} + '/submit'">
+                        <i class="fas fa-s fa-share-square text-dark" data-toggle="tooltip" title="Submit"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!------ MODAL ------>
+
+    <div class="modal fade" id="deleteModal" role="dialog" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Confirm Delete</h5>
+                    <button class="close" data-dismiss="modal" type="button">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you wish to delete this report?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                    <form action="" id="deleteForm" method="post">
+                        <button class="btn btn-danger" type="submit">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<div th:replace="layout :: scripts"></div>
+<script type="text/javascript">
+$(document).ready(function () {
+    $(document).on("click", ".open-deleteModal", function () {
+        var myExpenseId = $(this).data('id');
+        $(".modal-footer #deleteForm").attr("action","/report/" + myExpenseId + "/delete");
+    });
+});
+
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip()
+})
+
+
+
+</script>
+</body>
+</html>

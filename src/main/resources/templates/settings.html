@@ -2,68 +2,55 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout :: head('settings')"></head>
 <body>
-<div th:replace="layout :: nav"></div>
+<div th:replace="layout :: nav('settings')"></div>
 <main role="main" class="container">
     <div>
         <h2>Settings</h2>
     </div>
     <div class="card">
-        <!--TODO: combine all three default value forms into one-->
         <div class="card-body">
             <h4 class="card-title">Defaults</h4>
-            <form action="/categories/set-default" method="post">
+            <form action="/settings/set-defaults" method="post">
                 <div class="form-row">
-                    <div class="col-md-11">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <select class="form-control" id="category" name="selectedId">
+                            <select class="form-control" id="category" name="categoryId">
                                 <option th:each="category : ${categories}" th:text="${category.name}"
                                         th:value="${category.id}"
                                         th:selected="${category.defaultCategory}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="form-group setting">
-                            <button class="btn btn-outline-secondary" type="submit">Set</button>
-                        </div>
-                    </div>
                 </div>
-            </form>
-            <form action="/clients/set-default" method="post">
                 <div class="form-row">
-                    <div class="col-md-11">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="client">Client</label>
-                            <select class="form-control" id="client" name="selectedId">
+                            <select class="form-control" id="client" name="clientId">
                                 <option th:each="client : ${clients}" th:text="${client.name}"
                                         th:value="${client.id}"
                                         th:selected="${client.defaultClient}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="form-group setting">
-                            <button class="btn btn-outline-secondary" type="submit">Set</button>
-                        </div>
-                    </div>
                 </div>
-            </form>
-            <form action="/currencies/set-default" method="post">
                 <div class="form-row">
-                    <div class="col-md-11">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <label for="currency">Currency</label>
-                            <select class="form-control" id="currency" name="selectedId">
+                            <select class="form-control" id="currency" name="currencyId">
                                 <option th:each="currency : ${currencies}" th:text="${currency.currency}"
                                         th:value="${currency.id}"
                                         th:selected="${currency.defaultCurrency}"></option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-1">
-                        <div class="form-group setting">
-                            <button class="btn btn-outline-secondary" type="submit">Set</button>
+                </div>
+                <div class="form-row">
+                    <div class="col-md-12">
+                        <div class="form-group float-right">
+                            <button class="btn btn-primary" type="submit">Save</button>
                         </div>
                     </div>
                 </div>

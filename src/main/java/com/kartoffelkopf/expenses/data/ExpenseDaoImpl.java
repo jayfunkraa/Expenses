@@ -6,7 +6,9 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -18,8 +20,10 @@ public class ExpenseDaoImpl implements ExpenseDao {
     @Override
     public List<Expense> findAll() {
         Session session = sessionFactory.openSession();
-        CriteriaQuery<Expense> criteriaQuery = session.getCriteriaBuilder().createQuery(Expense.class);
-        criteriaQuery.from(Expense.class);
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<Expense> criteriaQuery = criteriaBuilder.createQuery(Expense.class);
+        Root<Expense> root = criteriaQuery.from(Expense.class);
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("date")));
         List<Expense> expenses = session.createQuery(criteriaQuery).getResultList();
         session.close();
         return expenses;

@@ -16,7 +16,7 @@ public class Expense {
     private LocalDate date;
     private String description;
     private String merchant;
-    private float cost;
+    private double cost;
     private boolean billable;
     private boolean reimbursable;
 
@@ -34,6 +34,7 @@ public class Expense {
 
     public Expense() {
         this.date = LocalDate.now();
+        this.cost = 0.00;
     }
 
     public long getId() {
@@ -60,11 +61,11 @@ public class Expense {
         this.merchant = merchant;
     }
 
-    public float getCost() {
+    public double getCost() {
         return cost;
     }
 
-    public void setCost(float cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 

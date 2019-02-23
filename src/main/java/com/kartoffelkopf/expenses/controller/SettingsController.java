@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -34,21 +33,13 @@ public class SettingsController {
         return "settings";
     }
 
-    //TODO: combine all three default field mappings into one request
-    @RequestMapping(value = "/categories/set-default", method = RequestMethod.POST)
-    public String setDefaultCategory(@RequestParam("selectedId") long id) {
-        categoryService.setDefault(id);
-        return "redirect:/settings";
-    }
-
-    @RequestMapping(value = "/clients/set-default", method = RequestMethod.POST)
-    public String setDefaultClient(@RequestParam("selectedId") long id) {
-        clientService.setDefault(id);
-        return "redirect:/settings";
-    }
-    @RequestMapping(value = "/currencies/set-default", method = RequestMethod.POST)
-    public String setDefaultCurrency(@RequestParam("selectedId") long id) {
-        currencyService.setDefault(id);
+    @RequestMapping("/settings/set-defaults")
+    public String setDefaults(@RequestParam("categoryId") long categoryId,
+                              @RequestParam("clientId") long clientId,
+                              @RequestParam("currencyId") long currencyId) {
+        categoryService.setDefault(categoryId);
+        clientService.setDefault(clientId);
+        currencyService.setDefault(currencyId);
         return "redirect:/settings";
     }
 }

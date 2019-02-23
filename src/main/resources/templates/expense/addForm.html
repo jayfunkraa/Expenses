@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('expense form')"></head>
+<body>
+<div th:replace="layout :: nav('expense')"></div>
+<main class="container" role="main">
+    <h2>Add Expense</h2>
+    <form id="expense" method="post" th:action="@{/expense}"
+          th:object="${expense}">
+        <div class="form-row">
+            <input th:field="*{id}" type="hidden">
+            <div class="col-md-3 form-group">
+                <label for="date">Date</label>
+                <input class="form-control" id="date" th:field="*{date}" type="date">
+            </div>
+            <div class="col-md-5 form-group">
+                <label for="merchant">Merchant</label>
+                <input class="form-control" id="merchant" th:field="*{merchant}" type="text">
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="cost">Cost</label>
+                <!-- TODO: force 2 decimal places for cost field-->
+                <input class="form-control" id="cost" step="0.01" th:field="*{cost}"
+                       type="number">
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="currency">Currency</label>
+                <select class="form-control" id="currency" name="currencyId">
+                    <option th:each="currency : ${currencies}" th:selected="${currency.defaultCurrency}"
+                            th:text="${currency.currency}" th:value="${currency.id}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 form-group">
+                <label for="description">Description</label>
+                <input class="form-control" id="description" th:field="*{description}" type="text">
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="category">Category</label>
+                <select class="form-control" id="category" name="categoryId">
+                    <option th:each="category : ${categories}" th:selected="${category.defaultCategory}" th:text="${category.name}"
+                            th:value="${category.id}"></option>
+                </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="client">Client</label>
+                <select class="form-control" id="client" name="clientId">
+                    <option th:each="client : ${clients}" th:selected="${client.defaultClient}" th:text="${client.name}"
+                            th:value="${client.id}"></option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-3">
+                <label for="report">Report</label>
+                <select class="form-control" id="report" name="reportId">
+                    <option th:each="report : ${reports}" th:text="@{${report.title} + ' (' + ${report.type} + ')'}" th:value="${report.id}"></option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div class="form-check">
+                    <input class="form-check-input" id="billable" th:field="*{billable}" type="checkbox">
+                    <label class="form-check-label" for="billable">Billable</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" id="reimbursable" th:field="*{reimbursable}" type="checkbox">
+                    <label class="form-check-label" for="reimbursable">Reimbursable</label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="float-right">
+                    <button class="mx-1 btn btn-primary" type="submit">Add</button>
+                    <a class=" mx-1 btn btn-secondary" href="/">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</main>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

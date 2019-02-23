@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('Report Form')"></head>
+<body>
+<div th:replace="layout :: nav('report')"></div>
+<main role="main" class="container">
+    <h2 th:text="@{${heading} + ' Report'}"></h2>
+    <form id="report" method="post" th:action="@{${action}}"
+          th:object="${report}">
+        <div class="form-row">
+            <input type="hidden" th:field="*{id}">
+            <div class="col-md-8 form-group">
+                <label for="title">Title</label>
+                <input class="form-control" id="title" th:field="*{title}" type="text">
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="type">Type</label>
+                <select class="form-control" id="type" th:field="*{type}">
+                    <option value="Personal">Personal</option>
+                    <option value="Coutts">Coutts</option>
+                </select>
+            </div>
+            <div class="col-md-2 form-group">
+                <label for="dueDate">Due Date</label>
+                <input class="form-control" id="dueDate" th:field="*{dueDate}" type="date">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="float-right">
+                    <button type="submit" class="mx-1 btn btn-primary" th:text="${submit}"></button>
+                    <a class=" mx-1 btn btn-secondary" href="/reports">Cancel</a>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+</main>
+<div th:replace="layout :: scripts"></div>
+</body>
+</html>

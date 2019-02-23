@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap.css}" />
     <link rel="stylesheet" th:href="@{/vendor/bootstrap/css/bootstrap-grid.css}" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/vendor/fontawesome/css/all.css}" />
     <link rel="stylesheet" th:href="@{/app/app.css}" />
 
 
@@ -18,7 +18,7 @@
 
 <body>
 
-<div th:fragment="nav" class="navbar-fixed">
+<div class="navbar-fixed" th:fragment="nav(page)">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="/">
             <span class="fa-stack fa-sm">
@@ -31,14 +31,16 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-item" th:classappend="${page == 'expense'} ? active">
                     <a class="nav-link" href="/">Expenses</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Reports</a>
+                <li class="nav-item" th:classappend="${page == 'report'} ? active">
+                    <a class="nav-link" href="/reports">Reports</a>
                 </li>
             </ul>
-            <a class="float-right" href="/settings"><i class="fas fa-cog fa-lg text-light"></i></a>
+            <a class="float-right" th:href="${page == 'settings'} ? '/' : '/settings'">
+                <i th:class="@{(${page == 'settings'} ? 'fas fa-times' : 'fas fa-cog') + ' fa-lg text-light'}"></i>
+            </a>
         </div>
     </nav>
 </div>
@@ -46,6 +48,7 @@
 <div th:fragment="scripts">
     <script th:src="@{/vendor/jquery/jquery-3.3.1.min.js}"></script>
     <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.js}"></script>
+    <script th:src="@{/vendor/jquery/plugins/autoNumeric.js}"></script>
 </div>
 
 </body>
