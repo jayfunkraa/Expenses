@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -52,7 +53,7 @@ public class ExpenseController {
         model.addAttribute("currencies", currencyService.findAll());
         List<Report> reports = reportService.findAll();
         if (reports.isEmpty()) {
-            Report report = new Report("New Report");
+            Report report = new Report("New Report", "New", LocalDate.now());
             reportService.save(report);
             reports.add(report);
         }
@@ -71,7 +72,7 @@ public class ExpenseController {
         expense.setClient(clientService.findById(clientId));
         expense.setCurrency(currencyService.findById(currencyId));
         expense.setReport(reportService.findById(reportId));
-        if (file != null) {
+        if (!file.isEmpty()) {
             try {
                 Receipt receipt = new Receipt(file.getOriginalFilename(), file.getContentType(), file.getBytes());
                 receiptService.save(receipt);
@@ -82,6 +83,7 @@ public class ExpenseController {
         } else {
             System.err.println("No file selected");
         }
+
         expenseService.save(expense);
         return "redirect:/";
     }
@@ -94,7 +96,7 @@ public class ExpenseController {
         model.addAttribute("currencies", currencyService.findAll());
         List<Report> reports = reportService.findAll();
         if (reports.isEmpty()) {
-            Report report = new Report("New Report");
+            Report report = new Report("New Report", "New", LocalDate.now());
             reportService.save(report);
             reports.add(report);
         }
@@ -108,12 +110,13 @@ public class ExpenseController {
                                   @RequestParam long currencyId,
                                   @RequestParam long reportId,
                                   @RequestParam MultipartFile file,
+                                  @RequestParam long receiptId,
                                   Expense expense) {
         expense.setCategory(categoryService.findById(categoryId));
         expense.setClient(clientService.findById(clientId));
         expense.setCurrency(currencyService.findById(currencyId));
         expense.setReport(reportService.findById(reportId));
-        if (file != null) {
+        if (!file.isEmpty()) {
             try {
                 Receipt receipt = new Receipt(file.getOriginalFilename(), file.getContentType(), file.getBytes());
                 receiptService.save(receipt);
@@ -122,7 +125,11 @@ public class ExpenseController {
                 System.err.println("Unable to get byte array from file");
             }
         } else {
-            System.err.println("No file selected");
+            if (receiptId != 0) {
+                expense.setReceipt(receiptService.findById(receiptId));
+            } else {
+                System.err.println("Problem reading file");
+            }
         }
         expenseService.save(expense);
         return "redirect:/";

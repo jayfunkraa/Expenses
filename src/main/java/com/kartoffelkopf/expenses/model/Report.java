@@ -24,10 +24,13 @@ public class Report {
     private String title;
     private String type;
     private boolean submitted;
-    public Report(String title) {
-        this.title = title;
-        this.submitted = false;
+
+    public Report( String title, String type, LocalDate dueDate) {
         this.total = 0;
+        this.title = title;
+        this.type = type;
+        this.submitted = false;
+        this.dueDate = dueDate;
     }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
