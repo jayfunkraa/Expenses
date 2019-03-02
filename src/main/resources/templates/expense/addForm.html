@@ -5,7 +5,7 @@
 <div th:replace="layout :: nav('expense')"></div>
 <main class="container" role="main">
     <h2>Add Expense</h2>
-    <form id="expense" method="post" th:action="@{/expense}"
+    <form enctype="multipart/form-data" id="expense" method="post" th:action="@{/expense}"
           th:object="${expense}">
         <div class="form-row">
             <input th:field="*{id}" type="hidden">
@@ -20,7 +20,7 @@
             <div class="col-md-2 form-group">
                 <label for="cost">Cost</label>
                 <!-- TODO: force 2 decimal places for cost field-->
-                <input class="form-control" id="cost" step="0.01" th:field="*{cost}"
+                <input class="form-control" id="cost" min="0.00" step="0.01" th:field="*{cost}"
                        type="number">
             </div>
             <div class="col-md-2 form-group">
@@ -58,6 +58,10 @@
                     <option th:each="report : ${reports}" th:text="@{${report.title} + ' (' + ${report.type} + ')'}" th:value="${report.id}"></option>
                 </select>
             </div>
+            <div class="col-md-3 form-group">
+                <label for="receipt">Receipt</label>
+                <input id="receipt" name="file" type="file">
+            </div>
             <div class="col-md-3">
                 <div class="form-check">
                     <input class="form-check-input" id="billable" th:field="*{billable}" type="checkbox">
@@ -68,7 +72,7 @@
                     <label class="form-check-label" for="reimbursable">Reimbursable</label>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="float-right">
                     <button class="mx-1 btn btn-primary" type="submit">Add</button>
                     <a class=" mx-1 btn btn-secondary" href="/">Cancel</a>

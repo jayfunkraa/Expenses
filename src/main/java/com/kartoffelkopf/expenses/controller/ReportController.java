@@ -62,4 +62,5 @@ public class ReportController {
         reportService.submit(reportService.findById(id));
         return "redirect:/reports";
     }
+
 }

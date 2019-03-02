@@ -1,5 +1,6 @@
 package com.kartoffelkopf.expenses.service;
 
+import com.kartoffelkopf.expenses.model.Expense;
 import com.kartoffelkopf.expenses.model.Report;
 
 import java.util.List;
@@ -16,4 +17,10 @@ public interface ReportService {
     void submit(Report report);
 
     List<Report> findAllOpen();
+
+    List<Expense> getAllExpenses(Report report);
+
+    double getTotal(Report report);
+
+    void calculateAll();
 }

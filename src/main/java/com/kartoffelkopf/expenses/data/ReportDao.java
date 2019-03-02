@@ -9,5 +9,4 @@ public interface ReportDao {
     Report findById(long id);
     void save(Report report);
     void delete(Report report);
-    List<Report> findAllOpen();
 }

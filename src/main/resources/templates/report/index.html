@@ -15,6 +15,7 @@
                 <th>Title</th>
                 <th>Type</th>
                 <th>Due Date</th>
+                <th>Total</th>
                 <th></th>
                 <th></th>
             </tr>
@@ -24,6 +25,7 @@
                 <td><p th:text="${report.title}"></p></td>
                 <td><p th:text="${report.type}"></p></td>
                 <td><p th:text="${#temporals.format(report.dueDate, 'dd/MM/YY')}"></p></td>
+                <td><p th:text="${report.total}"></p></td>
                 <td>
                     <p>
                         <i data-toggle="tooltip"

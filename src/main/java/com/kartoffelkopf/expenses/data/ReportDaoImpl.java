@@ -54,16 +54,4 @@ public class ReportDaoImpl implements ReportDao {
         session.close();
     }
 
-    @Override
-    public List<Report> findAllOpen() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Report> criteriaQuery = criteriaBuilder.createQuery(Report.class);
-        Root<Report> root = criteriaQuery.from(Report.class);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("submitted"), 0));
-        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("dueDate")));
-        List<Report> reports = session.createQuery(criteriaQuery).getResultList();
-        session.close();
-        return reports;
-    }
 }

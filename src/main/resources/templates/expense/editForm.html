@@ -5,7 +5,7 @@
 <div th:replace="layout :: nav('expense')"></div>
 <main class="container" role="main">
     <h2>Edit Expense</h2>
-    <form id="expense" method="post" th:action="@{/expense/edit}"
+    <form enctype="multipart/form-data" id="expense" method="post" th:action="@{/expense/edit}"
           th:object="${expense}">
         <div class="form-row">
             <input th:field="*{id}" type="hidden">
@@ -55,8 +55,13 @@
             <div class="col-md-3">
                 <label for="report">Report</label>
                 <select class="form-control" id="report" name="reportId">
-                    <option th:each="report : ${reports}" th:text="@{${report.title} + ' (' + ${report.type} + ')'}" th:value="${report.id}"></option>
+                    <option th:each="report : ${reports}" th:selected="${report.id == expense.report.id}" th:text="@{${report.title} + ' (' + ${report.type} + ')'}"
+                    th:value="${report.id}"></option>
                 </select>
+            </div>
+            <div class="col-md-3 form-group">
+                <label for="receipt">Receipt</label>
+                <input id="receipt" name="file" type="file">
             </div>
             <div class="col-md-3">
                 <div class="form-check">
@@ -68,7 +73,7 @@
                     <label class="form-check-label" for="reimbursable">Reimbursable</label>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <div class="float-right">
                     <button class="mx-1 btn btn-primary" type="submit">Save</button>
                     <a class=" mx-1 btn btn-secondary" href="/">Cancel</a>

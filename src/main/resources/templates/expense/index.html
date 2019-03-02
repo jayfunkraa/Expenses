@@ -12,6 +12,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th></th>
                 <th>Date</th>
                 <th>Merchant</th>
                 <th>Cost</th>
@@ -26,6 +27,12 @@
             </thead>
             <tbody>
             <tr th:each="expense : ${expenses}">
+                <td>
+                    <a target="_blank" th:href="@{'/expense/' + ${expense.id} + '/get-receipt'}">
+                        <i data-toggle="tooltip"
+                           th:class="'ml-2 fas fa-receipt ' + (${expense.receipt != null} ? 'text-success' : 'text-muted')" title="Receipt"></i>
+                    </a>
+                </td>
                 <td><p th:text="${#temporals.format(expense.date, 'dd/MM/YY')}"></p></td>
                 <td><p th:text="${expense.merchant}"></p></td>
                 <td><p th:text="@{${#numbers.formatDecimal(expense.cost,1,2)}}"></p></td>
@@ -35,18 +42,18 @@
                 <td><p th:text="${expense.client.name}"></p></td>
                 <td><p th:text="${expense.report.title}"></p></td>
                 <td>
-                    <p>
-                        <i th:class="'ml-2 fas fa-file-invoice ' + (${expense.billable} ? 'text-success' : 'text-muted')"
-                           data-toggle="tooltip" title="Billable"></i>
-                        <i th:class="'ml-2 fas fa-money-bill-wave ' + (${expense.reimbursable} ? 'text-success' : 'text-muted')"
-                           data-toggle="tooltip" title="Reimbursable"></i>
-                    </p>
+                    <i data-toggle="tooltip"
+                       th:class="'ml-2 fas fa-file-invoice ' + (${expense.billable} ? 'text-success' : 'text-muted')" title="Billable"></i>
+                    <i data-toggle="tooltip"
+                       th:class="'ml-2 fas fa-money-bill-wave ' + (${expense.reimbursable} ? 'text-success' : 'text-muted')" title="Reimbursable"></i>
+
                 </td>
                 <td>
                     <a class="text-dark" th:href="@{'/expense/' + ${expense.id}} + '/edit'">
                         <i class="fas fa-s fa-edit text-dark mr-3" data-toggle="tooltip" title="Edit"></i>
                     </a>
-                    <a class="open-deleteModal text-dark" href="#" th:data-id="${expense.id}" data-toggle="modal" data-target="#deleteModal">
+                    <a class="open-deleteModal text-dark" data-target="#deleteModal" data-toggle="modal" href="#"
+                       th:data-id="${expense.id}">
                         <i class="fas fa-s fa-trash-alt text-dark" data-toggle="tooltip" title="Delete"></i>
                     </a>
                 </td>
@@ -91,6 +98,10 @@ $(document).ready(function () {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+
+
 
 
 

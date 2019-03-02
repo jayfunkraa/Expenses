@@ -32,6 +32,10 @@ public class Expense {
     @OneToOne
     private Report report;
 
+    @OneToOne
+    private Receipt receipt;
+
+
     public Expense() {
         this.date = LocalDate.now();
         this.cost = 0.00;
@@ -123,5 +127,13 @@ public class Expense {
 
     public void setReport(Report report) {
         this.report = report;
+    }
+
+    public Receipt getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Receipt receipt) {
+        this.receipt = receipt;
     }
 }

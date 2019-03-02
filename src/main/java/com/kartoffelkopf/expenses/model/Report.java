@@ -11,7 +11,10 @@ import java.time.LocalDate;
 @Entity
 public class Report {
 
+    private double total;
+
     public Report() {
+        this.total = 0;
     }
 
     @Id
@@ -21,6 +24,11 @@ public class Report {
     private String title;
     private String type;
     private boolean submitted;
+    public Report(String title) {
+        this.title = title;
+        this.submitted = false;
+        this.total = 0;
+    }
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate dueDate;
@@ -63,5 +71,13 @@ public class Report {
 
     public void setSubmitted(boolean submitted) {
         this.submitted = submitted;
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
     }
 }

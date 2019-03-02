@@ -32,4 +32,5 @@ public class ExpenseServiceImpl implements ExpenseService {
     public void delete(Expense expense) {
         expenseDao.delete(expense);
     }
+
 }
