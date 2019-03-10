@@ -15,7 +15,7 @@ public class Currency {
     private String currency;
     private String name;
     private String country;
-    private double rate;
+    private String symbol;
     private boolean defaultCurrency;
 
     public Currency() {
@@ -53,19 +53,19 @@ public class Currency {
         this.country = country;
     }
 
-    public double getRate() {
-        return rate;
-    }
-
-    public void setRate(double rate) {
-        this.rate = rate;
-    }
-
     public boolean isDefaultCurrency() {
         return defaultCurrency;
     }
 
     public void setDefaultCurrency(boolean defaultCurrency) {
         this.defaultCurrency = defaultCurrency;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public void setSymbol(String symbol) {
+        this.symbol = symbol;
     }
 }

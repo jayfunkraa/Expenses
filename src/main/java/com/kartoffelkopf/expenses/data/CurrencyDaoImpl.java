@@ -1,7 +1,7 @@
 package com.kartoffelkopf.expenses.data;
 
-import com.kartoffelkopf.expenses.model.Client;
 import com.kartoffelkopf.expenses.model.Currency;
+import com.kartoffelkopf.expenses.model.CurrencyMap;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,4 +46,32 @@ public class CurrencyDaoImpl implements CurrencyDao {
         session.getTransaction().commit();
         session.close();
     }
+
+    @Override
+    public List<CurrencyMap> findAllCurrencyMaps() {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<CurrencyMap> criteriaQuery = criteriaBuilder.createQuery(CurrencyMap.class);
+        Root<CurrencyMap> root = criteriaQuery.from(CurrencyMap.class);
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("from")));
+        List<CurrencyMap> currencyMaps = session.createQuery(criteriaQuery).getResultList();
+        session.close();
+        return currencyMaps;
+    }
+
+    @Override
+    public CurrencyMap findCurrencyMapByFromTo(Currency from, Currency to) {
+        Session session = sessionFactory.openSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<CurrencyMap> criteriaQuery = criteriaBuilder.createQuery(CurrencyMap.class);
+        Root<CurrencyMap> root = criteriaQuery.from(CurrencyMap.class);
+        criteriaQuery.where(criteriaBuilder.equal(root.get("from"), from), criteriaBuilder.equal(root.get("to"), to));
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("date")));
+        List<CurrencyMap> currencyMaps = session.createQuery(criteriaQuery).getResultList();
+        if (currencyMaps.size() != 0) {
+            return currencyMaps.get(0);
+        }else return null;
+    }
+
+
 }

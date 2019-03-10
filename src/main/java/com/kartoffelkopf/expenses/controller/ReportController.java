@@ -17,12 +17,12 @@ public class ReportController {
 
     @RequestMapping("/reports")
     public String index(Model model) {
-        model.addAttribute("reports", reportService.findAll());
+        model.addAttribute("reports", reportService.getReportView());
         return "report/index";
     }
 
     @RequestMapping("/report/add")
-    public String reportAdd(Model model) {
+    public String add(Model model) {
         model.addAttribute("report", new Report());
         model.addAttribute("action", "/report");
         model.addAttribute("heading", "New");
@@ -31,13 +31,13 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
-    public String reportAddPost(Report report) {
+    public String addPost(Report report) {
         reportService.save(report);
         return "redirect:/reports";
     }
 
     @RequestMapping("/report/{id}/edit")
-    public String reportEdit(@PathVariable long id, Model model) {
+    public String edit(@PathVariable long id, Model model) {
         model.addAttribute("report", reportService.findById(id));
         model.addAttribute("action", "/report/edit");
         model.addAttribute("heading", "Edit");
@@ -46,21 +46,28 @@ public class ReportController {
     }
 
     @RequestMapping(value = "/report/edit", method = RequestMethod.POST)
-    public String reportEditPost(Report report) {
+    public String editPost(Report report) {
         reportService.save(report);
         return "redirect:/reports";
     }
 
     @RequestMapping(value = "/report/{id}/delete", method = RequestMethod.POST)
-    public String reportDelete(@PathVariable long id) {
+    public String delete(@PathVariable long id) {
         reportService.delete(reportService.findById(id));
         return "redirect:/reports";
     }
 
     @RequestMapping("/report/{id}/submit")
-    public String reportSubmit(@PathVariable long id) {
+    public String submit(@PathVariable long id) {
         reportService.submit(reportService.findById(id));
         return "redirect:/reports";
+    }
+
+    @RequestMapping("/report/{id}/expenses")
+    public String reportExpenses(Model model, @PathVariable long id) {
+        model.addAttribute("report", reportService.findById(id));
+        model.addAttribute("expenses", reportService.getAllExpenses(id));
+        return "report/expenses";
     }
 
 }

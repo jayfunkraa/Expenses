@@ -12,6 +12,7 @@
         <table class="table">
             <thead>
             <tr>
+                <th></th>
                 <th>Title</th>
                 <th>Type</th>
                 <th>Due Date</th>
@@ -22,21 +23,28 @@
             </thead>
             <tbody>
             <tr th:each="report : ${reports}">
+                <td>
+                    <a th:href="@{'/report/' + ${report.id} + '/expenses'}">
+                        <i class="ml-2 fas fa-folder-open text-dark" data-toggle="tooltip" title="View Expenses"></i>
+                    </a>
+                </td>
                 <td><p th:text="${report.title}"></p></td>
                 <td><p th:text="${report.type}"></p></td>
                 <td><p th:text="${#temporals.format(report.dueDate, 'dd/MM/YY')}"></p></td>
-                <td><p th:text="${report.total}"></p></td>
+                <td><p th:text="@{${report.symbol} + ${#numbers.formatDecimal(report.total,1,2)}}"></p></td>
                 <td>
                     <p>
                         <i data-toggle="tooltip"
-                           th:class="'ml-2 fas fa-check-circle ' + (${report.submitted} ? 'text-success' : 'text-muted')" title="Submitted"></i>
+                           th:class="'ml-2 fas fa-check-circle ' + (${report.submitted} ? 'text-success' : 'text-muted')"
+                           th:title="${report.submitted} ? 'Submitted' : Unsubmitted"></i>
                     </p>
                 </td>
                 <td>
                     <a class="text-dark" th:href="@{'/report/' + ${report.id}} + '/edit'">
                         <i class="fas fa-s fa-edit text-dark mr-3" data-toggle="tooltip" title="Edit"></i>
                     </a>
-                    <a class="open-deleteModal text-dark" data-target="#deleteModal" data-toggle="modal" href="#" th:data-id="${report.id}">
+                    <a class="open-deleteModal text-dark" data-target="#deleteModal" data-toggle="modal" href="#"
+                       th:data-id="${report.id}">
                         <i class="fas fa-s fa-trash-alt text-dark mr-3" data-toggle="tooltip" title="Delete"></i>
                     </a>
                     <a class="text-dark" th:href="@{'/report/' + ${report.id}} + '/submit'">
@@ -48,7 +56,7 @@
         </table>
     </div>
 
-    <!------ MODAL ------>
+    <!------ DELETE MODAL ------>
 
     <div class="modal fade" id="deleteModal" role="dialog" tabindex="-1">
         <div class="modal-dialog" role="document">
@@ -76,14 +84,14 @@
 <script type="text/javascript">
 $(document).ready(function () {
     $(document).on("click", ".open-deleteModal", function () {
-        var myExpenseId = $(this).data('id');
-        $(".modal-footer #deleteForm").attr("action","/report/" + myExpenseId + "/delete");
+        var myReportId = $(this).data('id');
+        $(".modal-footer #deleteForm").attr("action","/report/" + myReportId + "/delete");
     });
-});
 
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
 
 
 

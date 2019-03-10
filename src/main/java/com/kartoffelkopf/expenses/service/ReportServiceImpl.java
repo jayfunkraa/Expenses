@@ -2,12 +2,14 @@ package com.kartoffelkopf.expenses.service;
 
 import com.kartoffelkopf.expenses.data.ExpenseDao;
 import com.kartoffelkopf.expenses.data.ReportDao;
+import com.kartoffelkopf.expenses.data.ReportViewDao;
+import com.kartoffelkopf.expenses.model.Currency;
 import com.kartoffelkopf.expenses.model.Expense;
 import com.kartoffelkopf.expenses.model.Report;
+import com.kartoffelkopf.expenses.model.ReportView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +17,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private ReportDao reportDao;
+
+    @Autowired
+    private ReportViewDao reportViewDao;
 
     @Autowired
     private ExpenseDao expenseService;
@@ -55,25 +60,25 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public List<Expense> getAllExpenses(Report report) {
-        List<Expense> expenses = new ArrayList<>();
-        for (Expense expense : expenseService.findAll()) {
-            if (expense.getReport() == report) {
-                expenses.add(expense);
-            }
-        }
+    public List<Expense> getAllExpenses(long id) {
+        //TODO: find a more efficient way of getting all expenses for a report
+        List<Expense> expenses = expenseService.findAll();
+        expenses.removeIf(expense -> expense.getReport().getId() != id);
         return expenses;
     }
 
     @Override
-    public double getTotal(Report report) {
-        return 0;
+    public List<ReportView> getReportView() {
+        return reportViewDao.findAll();
     }
 
     @Override
-    public void calculateAll() {
-
+    public void setReportCurrency(Currency currency) {
+        List<Report> reports = findAll();
+        for (Report report : reports) {
+            report.setCurrency(currency);
+            save(report);
+        }
     }
-
 
 }

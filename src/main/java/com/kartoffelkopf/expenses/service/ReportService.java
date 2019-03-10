@@ -1,7 +1,9 @@
 package com.kartoffelkopf.expenses.service;
 
+import com.kartoffelkopf.expenses.model.Currency;
 import com.kartoffelkopf.expenses.model.Expense;
 import com.kartoffelkopf.expenses.model.Report;
+import com.kartoffelkopf.expenses.model.ReportView;
 
 import java.util.List;
 
@@ -18,9 +20,9 @@ public interface ReportService {
 
     List<Report> findAllOpen();
 
-    List<Expense> getAllExpenses(Report report);
+    List<Expense> getAllExpenses(long id);
 
-    double getTotal(Report report);
+    List<ReportView> getReportView();
 
-    void calculateAll();
+    void setReportCurrency(Currency currency);
 }

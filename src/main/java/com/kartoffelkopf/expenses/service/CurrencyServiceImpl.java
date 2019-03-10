@@ -37,4 +37,9 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyDao.save(currency);
 
     }
+
+    @Override
+    public double getRate(Currency from, Currency to) {
+        return currencyDao.findCurrencyMapByFromTo(from, to).getRate();
+    }
 }

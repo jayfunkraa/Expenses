@@ -7,15 +7,15 @@
     <div>
         <h2>Settings</h2>
     </div>
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title">Defaults</h4>
-            <form action="/settings/set-defaults" method="post">
+    <form action="/settings/save" method="post">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Defaults</h4>
                 <div class="form-row">
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="category">Category</label>
-                            <select class="form-control" id="category" name="categoryId">
+                            <select class="form-control" id="category" name="defaultCategoryId">
                                 <option th:each="category : ${categories}" th:text="${category.name}"
                                         th:value="${category.id}"
                                         th:selected="${category.defaultCategory}"></option>
@@ -27,7 +27,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="client">Client</label>
-                            <select class="form-control" id="client" name="clientId">
+                            <select class="form-control" id="client" name="defaultClientId">
                                 <option th:each="client : ${clients}" th:text="${client.name}"
                                         th:value="${client.id}"
                                         th:selected="${client.defaultClient}"></option>
@@ -39,7 +39,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="currency">Currency</label>
-                            <select class="form-control" id="currency" name="currencyId">
+                            <select class="form-control" id="currency" name="defaultCurrencyId">
                                 <option th:each="currency : ${currencies}" th:text="${currency.currency}"
                                         th:value="${currency.id}"
                                         th:selected="${currency.defaultCurrency}"></option>
@@ -47,16 +47,31 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h4 class="card-title">Report Currency</h4>
                 <div class="form-row">
                     <div class="col-md-12">
-                        <div class="form-group float-right">
-                            <button class="btn btn-primary" type="submit">Save</button>
-                        </div>
+                        <select class="form-control" id="reportCurrency" name="reportCurrencyId">
+                            <option th:each="repCurr : ${currencies}" th:selected="${repCurr.id} == ${reportCurrency.id}"
+                                    th:text="${repCurr.currency}"
+                                    th:value="${repCurr.id}"></option>
+                        </select>
                     </div>
                 </div>
-            </form>
+
+            </div>
         </div>
-    </div>
+        <div class="form-row">
+            <div class="col-md-12">
+                <div class="form-group float-right">
+                    <button class="btn btn-primary" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </form>
 </main>
 <div th:replace="layout :: scripts"></div>
 </body>

@@ -2,20 +2,14 @@ package com.kartoffelkopf.expenses.model;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 public class Report {
 
-    private double total;
-
-    public Report() {
-        this.total = 0;
-    }
+    @OneToOne
+    private Currency currency;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +19,11 @@ public class Report {
     private String type;
     private boolean submitted;
 
+    public Report() {
+
+    }
+
     public Report( String title, String type, LocalDate dueDate) {
-        this.total = 0;
         this.title = title;
         this.type = type;
         this.submitted = false;
@@ -76,11 +73,11 @@ public class Report {
         this.submitted = submitted;
     }
 
-    public double getTotal() {
-        return total;
+    public Currency getCurrency() {
+        return currency;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }
