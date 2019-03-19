@@ -53,7 +53,7 @@ public class CategoryServiceImpl implements CategoryService {
         fileOutputStream.write(file.getBytes());
 
         // read file and create categories
-        CSVReader csvReader = new CSVReaderBuilder(new FileReader(convertedFile)).withSkipLines(0).build();
+        CSVReader csvReader = new CSVReaderBuilder(new FileReader(convertedFile)).withSkipLines(1).build();
         String[] line = null;
         while ((line = csvReader.readNext()) != null) {
             Category category = new Category();

@@ -1,7 +1,6 @@
 package com.kartoffelkopf.expenses.service;
 
 import com.kartoffelkopf.expenses.data.ClientDao;
-import com.kartoffelkopf.expenses.model.Category;
 import com.kartoffelkopf.expenses.model.Client;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -54,7 +53,7 @@ public class ClientServiceImpl implements ClientService{
             fileOutputStream.write(file.getBytes());
 
             // read file and create categories
-            CSVReader csvReader = new CSVReaderBuilder(new FileReader(convertedFile)).withSkipLines(0).build();
+            CSVReader csvReader = new CSVReaderBuilder(new FileReader(convertedFile)).withSkipLines(1).build();
             String[] line = null;
             while ((line = csvReader.readNext()) != null) {
                 Client client = new Client();
