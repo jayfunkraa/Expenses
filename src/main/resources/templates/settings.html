@@ -56,7 +56,7 @@
                     <div class="col-md-12">
                         <select class="form-control" id="reportCurrency" name="reportCurrencyId">
                             <option th:each="repCurr : ${currencies}"
-                                    th:selected="${repCurr.id} == ${reportCurrency.id}"
+                                    th:selected="${repCurr.reportCurrency}"
                                     th:text="${repCurr.currency}"
                                     th:value="${repCurr.id}"></option>
                         </select>

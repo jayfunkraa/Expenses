@@ -14,6 +14,8 @@ public interface CurrencyService {
 
     void setDefault(long id);
 
+    void setReportCurrency(long id);
+
     double getRate(Currency from, Currency to);
 
     void importFromCsv(MultipartFile file) throws IOException;

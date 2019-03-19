@@ -3,12 +3,10 @@ package com.kartoffelkopf.expenses.service;
 import com.kartoffelkopf.expenses.model.Category;
 import com.kartoffelkopf.expenses.model.Client;
 import com.kartoffelkopf.expenses.model.Currency;
-import com.kartoffelkopf.expenses.model.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -48,14 +46,6 @@ public class SettingServiceImpl implements SettingsService {
     @Override
     public List<Currency> getCurrencies() {
         return currencyService.findAll();
-    }
-
-    @Override
-    public Currency getReportCurrency() {
-        List<Report> reports = reportService.findAll();
-        if (reports.size() != 0) {
-            return reports.get(0).getCurrency();
-        }else return null;
     }
 
     @Override

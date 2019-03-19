@@ -17,6 +17,7 @@ public class Currency {
     private String country;
     private String symbol;
     private boolean defaultCurrency;
+    private boolean reportCurrency;
 
     public Currency() {
     }
@@ -67,5 +68,13 @@ public class Currency {
 
     public void setSymbol(String symbol) {
         this.symbol = symbol;
+    }
+
+    public boolean isReportCurrency() {
+        return reportCurrency;
+    }
+
+    public void setReportCurrency(boolean reportCurrency) {
+        this.reportCurrency = reportCurrency;
     }
 }

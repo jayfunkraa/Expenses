@@ -1,7 +1,6 @@
 package com.kartoffelkopf.expenses.service;
 
 import com.kartoffelkopf.expenses.data.CurrencyDao;
-import com.kartoffelkopf.expenses.model.Category;
 import com.kartoffelkopf.expenses.model.Currency;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
@@ -45,6 +44,21 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyDao.save(currency);
 
     }
+
+    @Override
+    public void setReportCurrency(long id) {
+        List<Currency> currencies = findAll();
+        for (Currency currency : currencies) {
+            if(currency.isReportCurrency()) {
+                currency.setReportCurrency(false);
+                currencyDao.save(currency);
+            }
+        }
+        Currency currency = findById(id);
+        currency.setReportCurrency(true);
+        currencyDao.save(currency);
+    }
+
 
     @Override
     public double getRate(Currency from, Currency to) {

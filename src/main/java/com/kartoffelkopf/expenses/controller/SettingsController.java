@@ -20,7 +20,6 @@ public class SettingsController {
         model.addAttribute("categories", settingsService.getCategories());
         model.addAttribute("clients", settingsService.getClients());
         model.addAttribute("currencies", settingsService.getCurrencies());
-        model.addAttribute("reportCurrency", settingsService.getReportCurrency());
         return "settings";
     }
 

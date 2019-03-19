@@ -22,7 +22,10 @@ public class ReportServiceImpl implements ReportService {
     private ReportViewDao reportViewDao;
 
     @Autowired
-    private ExpenseDao expenseService;
+    private ExpenseDao expenseDao;
+
+    @Autowired
+    private CurrencyService currencyService;
 
     @Override
     public List<Report> findAll() {
@@ -62,7 +65,7 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public List<Expense> getAllExpenses(long id) {
         //TODO: find a more efficient way of getting all expenses for a report
-        List<Expense> expenses = expenseService.findAll();
+        List<Expense> expenses = expenseDao.findAll();
         expenses.removeIf(expense -> expense.getReport().getId() != id);
         return expenses;
     }
@@ -79,6 +82,7 @@ public class ReportServiceImpl implements ReportService {
             report.setCurrency(currency);
             save(report);
         }
+        currencyService.setReportCurrency(currency.getId());
     }
 
 }
