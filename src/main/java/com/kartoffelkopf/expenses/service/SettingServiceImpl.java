@@ -6,7 +6,10 @@ import com.kartoffelkopf.expenses.model.Currency;
 import com.kartoffelkopf.expenses.model.Report;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -53,5 +56,32 @@ public class SettingServiceImpl implements SettingsService {
         if (reports.size() != 0) {
             return reports.get(0).getCurrency();
         }else return null;
+    }
+
+    @Override
+    public void importCategories(MultipartFile file) {
+        try {
+            categoryService.importFromCsv(file);
+        } catch (IOException e) {
+            System.err.println("Exception thrown whilst importing file");
+        }
+    }
+
+    @Override
+    public void importClients(MultipartFile file) {
+        try {
+            clientService.importFromCsv(file);
+        } catch (IOException e) {
+            System.err.println("Exception thrown whilst importing file");
+        }
+    }
+
+    @Override
+    public void importCurrencies(MultipartFile file) {
+        try {
+            currencyService.importFromCsv(file);
+        } catch (IOException e) {
+            System.err.println("Exception thrown whilst importing file");
+        }
     }
 }

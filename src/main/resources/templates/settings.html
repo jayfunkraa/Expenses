@@ -55,7 +55,8 @@
                 <div class="form-row">
                     <div class="col-md-12">
                         <select class="form-control" id="reportCurrency" name="reportCurrencyId">
-                            <option th:each="repCurr : ${currencies}" th:selected="${repCurr.id} == ${reportCurrency.id}"
+                            <option th:each="repCurr : ${currencies}"
+                                    th:selected="${repCurr.id} == ${reportCurrency.id}"
                                     th:text="${repCurr.currency}"
                                     th:value="${repCurr.id}"></option>
                         </select>
@@ -72,6 +73,62 @@
             </div>
         </div>
     </form>
+    <div class="card mb-3">
+        <div class="card-body">
+            <h4>Imports</h4>
+            <div>
+                <p>Categories</p>
+                <div class="row">
+                    <form enctype="multipart/form-data" action="/settings/import/categories" method="post">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="file" name="file">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="float-right">
+                                <button class="btn btn-primary" type="submit">Import</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <p>Clients</p>
+                <div class="row">
+                    <form enctype="multipart/form-data" action="/settings/import/clients" method="post">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="file" name="file">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="float-right">
+                                <button class="btn btn-primary" type="submit">Import</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div>
+                <p>Currencies</p>
+                <div class="row">
+                    <form enctype="multipart/form-data" action="/settings/import/currencies" method="post">
+                        <div class="col-md-10">
+                            <div class="form-group">
+                                <input type="file" name="file">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="float-right">
+                                <button class="btn btn-primary" type="submit">Import</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <div th:replace="layout :: scripts"></div>
 </body>

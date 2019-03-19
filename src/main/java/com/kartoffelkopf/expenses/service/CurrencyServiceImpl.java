@@ -1,10 +1,18 @@
 package com.kartoffelkopf.expenses.service;
 
 import com.kartoffelkopf.expenses.data.CurrencyDao;
+import com.kartoffelkopf.expenses.model.Category;
 import com.kartoffelkopf.expenses.model.Currency;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -41,5 +49,27 @@ public class CurrencyServiceImpl implements CurrencyService {
     @Override
     public double getRate(Currency from, Currency to) {
         return currencyDao.findCurrencyMapByFromTo(from, to).getRate();
+    }
+
+    @Override
+    public void importFromCsv(MultipartFile file) throws IOException {
+            // convert MultipartFile to File
+            File convertedFile = new File(file.getOriginalFilename());
+            convertedFile.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(convertedFile);
+            fileOutputStream.write(file.getBytes());
+
+            // read file and create categories
+            CSVReader csvReader = new CSVReaderBuilder(new FileReader(convertedFile)).withSkipLines(0).build();
+            String[] line = null;
+            while ((line = csvReader.readNext()) != null) {
+                Currency currency = new Currency();
+                currency.setCurrency(line[0]);
+                currency.setName(line[1]);
+                currency.setSymbol(line[2]);
+                currency.setCountry(line[3]);
+                currency.setDefaultCurrency(false);
+                currencyDao.save(currency);
+            }
     }
 }

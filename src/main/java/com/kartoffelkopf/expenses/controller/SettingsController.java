@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class SettingsController {
@@ -32,5 +33,34 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
+    @RequestMapping(value = "/settings/import/categories", method = RequestMethod.POST)
+    public String importCategories(@RequestParam MultipartFile file) {
+        if (!file.isEmpty()) {
+            settingsService.importCategories(file);
+        } else {
+            System.err.println("No file selected");
+        }
+        return "redirect:/settings";
+    }
+
+    @RequestMapping(value = "/settings/import/clients", method = RequestMethod.POST)
+    public String importClients(@RequestParam MultipartFile file) {
+        if (!file.isEmpty()) {
+            settingsService.importClients(file);
+        } else {
+            System.err.println("No file selected");
+        }
+        return "redirect:/settings";
+    }
+
+    @RequestMapping(value = "/settings/import/currencies", method = RequestMethod.POST)
+    public String importCurrencies(@RequestParam MultipartFile file) {
+        if (!file.isEmpty()) {
+            settingsService.importCurrencies(file);
+        } else {
+            System.err.println("No file selected");
+        }
+        return "redirect:/settings";
+    }
 
 }

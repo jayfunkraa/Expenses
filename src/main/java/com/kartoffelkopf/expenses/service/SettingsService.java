@@ -3,7 +3,9 @@ package com.kartoffelkopf.expenses.service;
 import com.kartoffelkopf.expenses.model.Category;
 import com.kartoffelkopf.expenses.model.Client;
 import com.kartoffelkopf.expenses.model.Currency;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 public interface SettingsService {
@@ -16,4 +18,7 @@ public interface SettingsService {
     List<Client> getClients();
     List<Currency> getCurrencies();
     Currency getReportCurrency();
+    void importCategories(MultipartFile file);
+    void importClients(MultipartFile file);
+    void importCurrencies(MultipartFile file);
 }
