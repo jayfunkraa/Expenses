@@ -19,4 +19,5 @@ public interface SettingsService {
     void importCategories(MultipartFile file);
     void importClients(MultipartFile file);
     void importCurrencies(MultipartFile file);
+    void importCurrencyMap(MultipartFile file);
 }

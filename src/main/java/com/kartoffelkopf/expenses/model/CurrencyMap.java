@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"from_id", "to_id"})})
 public class CurrencyMap {
 
     @Id

@@ -53,7 +53,7 @@ public class ExpenseController {
         model.addAttribute("currencies", currencyService.findAll());
         List<Report> reports = reportService.findAll();
         if (reports.isEmpty()) {
-            Report report = new Report("New Report", "New", LocalDate.now());
+            Report report = new Report("Unreported", "Unreported", LocalDate.now());
             reportService.save(report);
             reports.add(report);
         }
@@ -94,9 +94,10 @@ public class ExpenseController {
         model.addAttribute("clients", clientService.findAll());
         model.addAttribute("categories", categoryService.findAll());
         model.addAttribute("currencies", currencyService.findAll());
+        //TODO: move check for empty report list to reportService.findAll()
         List<Report> reports = reportService.findAll();
         if (reports.isEmpty()) {
-            Report report = new Report("New Report", "New", LocalDate.now());
+            Report report = new Report("Unreported", "Unreported", LocalDate.now());
             reportService.save(report);
             reports.add(report);
         }

@@ -14,9 +14,13 @@ public interface CurrencyService {
 
     void setDefault(long id);
 
+    Currency getReportCurrency();
+
     void setReportCurrency(long id);
 
     double getRate(Currency from, Currency to);
 
     void importFromCsv(MultipartFile file) throws IOException;
+
+    Currency findByCurrency(String currencyCode);
 }

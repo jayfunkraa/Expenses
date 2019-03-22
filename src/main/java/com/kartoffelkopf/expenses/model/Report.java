@@ -16,6 +16,7 @@ public class Report {
     private long id;
 
     private String title;
+    //TODO: replace type String with enum or class
     private String type;
     private boolean submitted;
 

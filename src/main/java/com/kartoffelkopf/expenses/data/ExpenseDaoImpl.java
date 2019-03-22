@@ -23,7 +23,7 @@ public class ExpenseDaoImpl implements ExpenseDao {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Expense> criteriaQuery = criteriaBuilder.createQuery(Expense.class);
         Root<Expense> root = criteriaQuery.from(Expense.class);
-        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("date")));
+        criteriaQuery.orderBy(criteriaBuilder.desc(root.get("date")));
         List<Expense> expenses = session.createQuery(criteriaQuery).getResultList();
         session.close();
         return expenses;

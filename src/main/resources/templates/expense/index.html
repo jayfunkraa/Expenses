@@ -3,65 +3,82 @@
 <head th:replace="layout :: head('expenses')"></head>
 <body>
 <div th:replace="layout :: nav('expense')"></div>
-<main role="main" class="container">
-    <div>
-        <h2>Expenses</h2>
-        <a class="mb-2 btn btn-sm btn-primary" href="/expense/add">Add New</a>
+<main class="container overflow-hidden" role="main">
+    <div class="row">
+        <div class="col-md-10 text-jh-primary">
+            <h2>Expenses</h2>
+        </div>
+        <div class="col-md-2 mt-1 text-right">
+            <a class="btn btn-sm btn-jh-primary" href="/expense/add"><i class="fas fa-plus"></i></a>
+        </div>
     </div>
-    <div>
-        <table class="table">
-            <thead>
-            <tr>
-                <th></th>
-                <th>Date</th>
-                <th>Merchant</th>
-                <th>Cost</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Client</th>
-                <th>Report</th>
-                <th></th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="expense : ${expenses}">
-                <td>
-                    <a target="_blank" th:href="@{'/expense/' + ${expense.id} + '/get-receipt'}"
-                       th:if="${expense.receipt != null}">
-                        <i class="ml-2 fas fa-receipt text-success" data-toggle="tooltip" title="Receipt"></i>
-                    </a>
-                    <i class="ml-2 fas fa-receipt text-muted" data-toggle="tooltip" th:if="${expense.receipt == null}"
-                       title="No Receipt"></i>
-                </td>
-                <td><p th:text="${#temporals.format(expense.date, 'dd/MM/YY')}"></p></td>
-                <td><p th:text="${expense.merchant}"></p></td>
-                <td><p th:text="@{${expense.currency.symbol} + ${#numbers.formatDecimal(expense.cost,1,2)}}"></p></td>
-                <td><p th:text="${expense.description}"></p></td>
-                <td><p th:text="${expense.category.name}"></p></td>
-                <td><p th:text="${expense.client.name}"></p></td>
-                <td><p th:text="${expense.report.title}"></p></td>
-                <td>
-                    <i data-toggle="tooltip"
-                       th:class="'ml-2 fas fa-file-invoice ' + (${expense.billable} ? 'text-success' : 'text-muted')"
-                       title="Billable"></i>
-                    <i data-toggle="tooltip"
-                       th:class="'ml-2 fas fa-money-bill-wave ' + (${expense.reimbursable} ? 'text-success' : 'text-muted')"
-                       title="Reimbursable"></i>
-
-                </td>
-                <td>
-                    <a class="text-dark" th:href="@{'/expense/' + ${expense.id}} + '/edit'">
-                        <i class="fas fa-s fa-edit text-dark mr-3" data-toggle="tooltip" title="Edit"></i>
-                    </a>
-                    <a class="open-deleteModal text-dark" data-target="#deleteModal" data-toggle="modal" href="#"
-                       th:data-id="${expense.id}">
-                        <i class="fas fa-s fa-trash-alt text-dark" data-toggle="tooltip" title="Delete"></i>
-                    </a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="row pt-2 bg-jh-primary text-light overflow-auto">
+        <div class="col-md-1">
+            <h6>Date</h6>
+        </div>
+        <div class="col-md-2">
+            <h6>Merchant</h6>
+        </div>
+        <div class="col-md-1">
+            <h6>Amount</h6>
+        </div>
+        <div class="col-md-2">
+            <h6>Category</h6>
+        </div>
+        <div class="col-md-2">
+            <h6>Client</h6>
+        </div>
+        <div class="col-md-3">
+            <h6>Description</h6>
+        </div>
+        <div class="col-md-1"></div>
+    </div>
+    <div class="row bg-light my-2 border d-flex align-items-center" th:each="expense : ${expenses}">
+        <div class="col-md-1 text-center">
+            <a target="_blank" th:href="@{'/expense/' + ${expense.id} + '/get-receipt'}"
+               th:if="${expense.receipt != null}">
+                <i class="fas fa-receipt text-jh-primary" data-toggle="tooltip" title="Receipt"></i>
+            </a>
+            <i class="fas fa-receipt text-muted" data-toggle="tooltip" th:if="${expense.receipt == null}"
+               title="No Receipt"></i>
+            <small th:text="${#temporals.format(expense.date, 'dd/MM/YY')}"></small>
+        </div>
+        <div class="col-md-2 mb-1">
+            <p class="mb-0 pb-0" th:text="${expense.merchant}"></p>
+            <a class="text-decoration-none" th:href="@{'/report/' + ${expense.report.id} + '/expenses'}">
+                <small th:class="@{${#strings.equals(expense.report.type, 'Unreported')} ? 'border p-1 bg-white text-muted' : 'p-1 bg-jh-primary text-light'}"
+                       th:text="${expense.report.title}"></small>
+            </a>
+        </div>
+        <div class="col-md-1">
+            <p class="mb-0 pb-0"
+               th:text="@{${expense.currency.symbol} + ${#numbers.formatDecimal(expense.cost,1,2)}}"></p>
+            <div>
+                <i data-toggle="tooltip"
+                   th:class="'fas fa-money-bill-wave ' + (${expense.billable} ? 'text-jh-primary' : 'text-muted')"
+                   title="Billable"></i>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p th:text="${expense.category.name}"></p>
+        </div>
+        <div class="col-md-2">
+            <p th:text="${expense.client.name}"></p>
+        </div>
+        <div class="col-md-3">
+            <p th:text="${expense.description}"></p>
+        </div>
+        <div class="col-md-1">
+            <div class="btn-group btn-group-sm" role="group">
+                <a class="btn btn-secondary" th:href="@{'/expense/' + ${expense.id}} + '/edit'">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a class="btn btn-secondary open-deleteModal" data-target="#deleteModal" data-toggle="modal" href="#"
+                   th:data-id="${expense.id}">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+        </div>
     </div>
 
     <!------ MODAL ------>
@@ -100,6 +117,9 @@ $(document).ready(function () {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
+
 
 
 

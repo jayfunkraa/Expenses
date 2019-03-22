@@ -25,6 +25,9 @@ public class SettingServiceImpl implements SettingsService {
     @Autowired
     private ReportService reportService;
 
+    @Autowired
+    private CurrencyMapService currencyMapService;
+
     @Override
     public void save(long defaultCategoryId, long defaultClientId, long defaultCurrencyId, long reportCurrencyId) {
         categoryService.setDefault(defaultCategoryId);
@@ -53,7 +56,7 @@ public class SettingServiceImpl implements SettingsService {
         try {
             categoryService.importFromCsv(file);
         } catch (IOException e) {
-            System.err.println("Exception thrown whilst importing file");
+            System.err.println("IO Exception thrown whilst importing categories file");
         }
     }
 
@@ -62,7 +65,7 @@ public class SettingServiceImpl implements SettingsService {
         try {
             clientService.importFromCsv(file);
         } catch (IOException e) {
-            System.err.println("Exception thrown whilst importing file");
+            System.err.println("IO Exception thrown whilst importing clients file");
         }
     }
 
@@ -71,7 +74,16 @@ public class SettingServiceImpl implements SettingsService {
         try {
             currencyService.importFromCsv(file);
         } catch (IOException e) {
-            System.err.println("Exception thrown whilst importing file");
+            System.err.println("IO Exception thrown whilst importing currencies file");
+        }
+    }
+
+    @Override
+    public void importCurrencyMap(MultipartFile file) {
+        try {
+            currencyMapService.importFromCsv(file);
+        } catch (IOException e) {
+            System.err.println("IO Exception thrown whilst importing currency map file");
         }
     }
 }

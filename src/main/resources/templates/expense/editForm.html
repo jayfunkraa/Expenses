@@ -4,7 +4,7 @@
 <body>
 <div th:replace="layout :: nav('expense')"></div>
 <main class="container" role="main">
-    <h2>Edit Expense</h2>
+    <h2 class="text-jh-primary">Edit Expense</h2>
     <form enctype="multipart/form-data" id="expense" method="post" th:action="@{/expense/edit}"
           th:object="${expense}">
         <div class="form-row">
@@ -76,7 +76,7 @@
             </div>
             <div class="col-md-3">
                 <div class="float-right">
-                    <button class="mx-1 btn btn-primary" type="submit">Save</button>
+                    <button class="mx-1 btn btn-jh-primary" type="submit">Save</button>
                     <a class=" mx-1 btn btn-secondary" href="/">Cancel</a>
                 </div>
             </div>

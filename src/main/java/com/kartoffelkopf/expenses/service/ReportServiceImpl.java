@@ -10,6 +10,8 @@ import com.kartoffelkopf.expenses.model.ReportView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,6 +46,13 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public void delete(Report report) {
+        List<Expense> expenses = expenseDao.findAll();
+        for (Expense expense : expenses) {
+            if (expense.getReport().getId() == report.getId()) {
+                expense.setReport(getUnreportedReport());
+                expenseDao.save(expense);
+            }
+        }
         reportDao.delete(report);
     }
 
@@ -83,6 +92,32 @@ public class ReportServiceImpl implements ReportService {
             save(report);
         }
         currencyService.setReportCurrency(currency.getId());
+    }
+
+    @Override
+    public Currency getReportCurrency() {
+        return currencyService.getReportCurrency();
+    }
+
+    @Override
+    public Report getUnreportedReport() {
+        List<Report> unreported = new ArrayList<>();
+        for (Report rep : findAll()) {
+            if (rep.getType().equals("Unreported")) {
+                unreported.add(rep);
+            }
+        }
+        switch (unreported.size()) {
+            case 0:
+                Report report = new Report("Unreported", "Unreported", LocalDate.now());
+                report.setCurrency(currencyService.getReportCurrency());
+                save(report);
+                return report;
+            case 1:
+                return unreported.get(0);
+            default:
+                return null;
+        }
     }
 
 }

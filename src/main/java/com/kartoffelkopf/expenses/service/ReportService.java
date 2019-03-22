@@ -25,4 +25,8 @@ public interface ReportService {
     List<ReportView> getReportView();
 
     void setReportCurrency(Currency currency);
+
+    Currency getReportCurrency();
+
+    Report getUnreportedReport();
 }

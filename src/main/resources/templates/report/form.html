@@ -4,7 +4,7 @@
 <body>
 <div th:replace="layout :: nav('report')"></div>
 <main role="main" class="container">
-    <h2 th:text="@{${heading} + ' Report'}"></h2>
+    <h2 class="text-jh-primary" th:text="@{${heading} + ' Report'}"></h2>
     <form id="report" method="post" th:action="@{${action}}"
           th:object="${report}">
         <div class="form-row">
@@ -28,7 +28,7 @@
         <div class="form-row">
             <div class="col-md-12">
                 <div class="float-right">
-                    <button type="submit" class="mx-1 btn btn-primary" th:text="${submit}"></button>
+                    <button class="mx-1 btn btn-jh-primary" th:text="${submit}" type="submit"></button>
                     <a class=" mx-1 btn btn-secondary" href="/reports">Cancel</a>
                 </div>
             </div>

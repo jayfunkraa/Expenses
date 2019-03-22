@@ -1,9 +1,6 @@
 package com.kartoffelkopf.expenses.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Currency {
@@ -12,6 +9,7 @@ public class Currency {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(unique = true)
     private String currency;
     private String name;
     private String country;

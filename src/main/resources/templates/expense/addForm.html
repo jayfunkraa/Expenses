@@ -4,7 +4,7 @@
 <body>
 <div th:replace="layout :: nav('expense')"></div>
 <main class="container" role="main">
-    <h2>Add Expense</h2>
+    <h2 class="text-jh-primary">Add Expense</h2>
     <form enctype="multipart/form-data" id="expense" method="post" th:action="@{/expense}"
           th:object="${expense}">
         <div class="form-row">
@@ -17,18 +17,24 @@
                 <label for="merchant">Merchant</label>
                 <input class="form-control" id="merchant" th:field="*{merchant}" type="text">
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label for="cost">Cost</label>
                 <!-- TODO: force 2 decimal places for cost field-->
                 <input class="form-control" id="cost" min="0.00" step="0.01" th:field="*{cost}"
                        type="number">
             </div>
-            <div class="col-md-2 form-group">
+            <div class="col-md-1 form-group">
                 <label for="currency">Currency</label>
                 <select class="form-control" id="currency" name="currencyId">
                     <option th:each="currency : ${currencies}" th:selected="${currency.defaultCurrency}"
                             th:text="${currency.currency}" th:value="${currency.id}"></option>
                 </select>
+            </div>
+            <div class="col-md-2 d-flex align-items-center">
+                <div class="form-check">
+                    <input class="form-check-input" id="billable" th:field="*{billable}" type="checkbox">
+                    <label class="form-check-label" for="billable">Billable</label>
+                </div>
             </div>
         </div>
         <div class="form-row">
@@ -58,23 +64,13 @@
                     <option th:each="report : ${reports}" th:text="@{${report.title} + ' (' + ${report.type} + ')'}" th:value="${report.id}"></option>
                 </select>
             </div>
-            <div class="col-md-3 form-group">
+            <div class="col-md-4 form-group">
                 <label for="receipt">Receipt</label>
                 <input id="receipt" name="file" type="file">
             </div>
-            <div class="col-md-3">
-                <div class="form-check">
-                    <input class="form-check-input" id="billable" th:field="*{billable}" type="checkbox">
-                    <label class="form-check-label" for="billable">Billable</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" id="reimbursable" th:field="*{reimbursable}" type="checkbox">
-                    <label class="form-check-label" for="reimbursable">Reimbursable</label>
-                </div>
-            </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
                 <div class="float-right">
-                    <button class="mx-1 btn btn-primary" type="submit">Add</button>
+                    <button class="mx-1 btn btn-jh-primary" type="submit">Add</button>
                     <a class=" mx-1 btn btn-secondary" href="/">Cancel</a>
                 </div>
             </div>

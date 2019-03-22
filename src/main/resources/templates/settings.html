@@ -5,123 +5,136 @@
 <div th:replace="layout :: nav('settings')"></div>
 <main role="main" class="container">
     <div>
-        <h2>Settings</h2>
+        <h2 class="text-jh-primary">Settings</h2>
     </div>
-    <form action="/settings/save" method="post">
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title">Defaults</h4>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="category">Category</label>
-                            <select class="form-control" id="category" name="defaultCategoryId">
-                                <option th:each="category : ${categories}" th:text="${category.name}"
-                                        th:value="${category.id}"
-                                        th:selected="${category.defaultCategory}"></option>
+    <div class="card-group">
+        <form action="/settings/save" method="post">
+            <div class="card m-3">
+                <div class="card-body">
+                    <h4 class="card-title">Defaults</h4>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <select class="form-control" id="category" name="defaultCategoryId">
+                                    <option th:each="category : ${categories}" th:selected="${category.defaultCategory}"
+                                            th:text="${category.name}"
+                                            th:value="${category.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="client">Client</label>
+                                <select class="form-control" id="client" name="defaultClientId">
+                                    <option th:each="client : ${clients}" th:selected="${client.defaultClient}"
+                                            th:text="${client.name}"
+                                            th:value="${client.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="currency">Currency</label>
+                                <select class="form-control" id="currency" name="defaultCurrencyId">
+                                    <option th:each="currency : ${currencies}" th:selected="${currency.defaultCurrency}"
+                                            th:text="${currency.currency}"
+                                            th:value="${currency.id}"></option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-12">
+                            <label for="reportCurrency">Report Currency</label>
+                            <select class="form-control" id="reportCurrency" name="reportCurrencyId">
+                                <option th:each="repCurr : ${currencies}"
+                                        th:selected="${repCurr.reportCurrency}"
+                                        th:text="${repCurr.currency}"
+                                        th:value="${repCurr.id}"></option>
                             </select>
                         </div>
                     </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="client">Client</label>
-                            <select class="form-control" id="client" name="defaultClientId">
-                                <option th:each="client : ${clients}" th:text="${client.name}"
-                                        th:value="${client.id}"
-                                        th:selected="${client.defaultClient}"></option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label for="currency">Currency</label>
-                            <select class="form-control" id="currency" name="defaultCurrencyId">
-                                <option th:each="currency : ${currencies}" th:text="${currency.currency}"
-                                        th:value="${currency.id}"
-                                        th:selected="${currency.defaultCurrency}"></option>
-                            </select>
+                    <div class="form-row mt-3">
+                        <div class="col-md-12">
+                            <div class="form-group float-right">
+                                <button class="btn btn-jh-primary" type="submit">Save</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card mb-3">
-            <div class="card-body">
-                <h4 class="card-title">Report Currency</h4>
-                <div class="form-row">
-                    <div class="col-md-12">
-                        <select class="form-control" id="reportCurrency" name="reportCurrencyId">
-                            <option th:each="repCurr : ${currencies}"
-                                    th:selected="${repCurr.reportCurrency}"
-                                    th:text="${repCurr.currency}"
-                                    th:value="${repCurr.id}"></option>
-                        </select>
-                    </div>
-                </div>
+        </form>
 
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="col-md-12">
-                <div class="form-group float-right">
-                    <button class="btn btn-primary" type="submit">Save</button>
-                </div>
-            </div>
-        </div>
-    </form>
-    <div class="card mb-3">
-        <div class="card-body">
-            <h4>Imports</h4>
-            <div>
-                <p>Categories</p>
-                <div class="row">
-                    <form enctype="multipart/form-data" action="/settings/import/categories" method="post">
-                        <div class="col-md-10">
+        <div class="card m-3 border-left">
+            <div class="card-body">
+                <h4 class="card-title">Imports</h4>
+                <h6 class="card-subtitle text-danger">Experimental: use with care</h6>
+                <div class="row my-3">
+                    <div></div>
+                    <form action="/settings/import/categories" class="form-inline" enctype="multipart/form-data"
+                          method="post">
+                        <div class="col">
                             <div class="form-group">
-                                <input type="file" name="file">
+                                <label for="file-categories">Categories</label>
+                                <input id="file-categories" name="file" type="file">
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="float-right">
-                                <button class="btn btn-primary" type="submit">Import</button>
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-jh-primary" type="submit">Import</button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-            <div>
-                <p>Clients</p>
-                <div class="row">
-                    <form enctype="multipart/form-data" action="/settings/import/clients" method="post">
-                        <div class="col-md-10">
+                <div class="row mb-3">
+                    <form action="/settings/import/clients" class="form-inline" enctype="multipart/form-data"
+                          method="post">
+                        <div class="col">
                             <div class="form-group">
-                                <input type="file" name="file">
+                                <label for="file-clients">Clients</label>
+                                <input id="file-clients" name="file" type="file">
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="float-right">
-                                <button class="btn btn-primary" type="submit">Import</button>
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-jh-primary" type="submit">Import</button>
                             </div>
                         </div>
                     </form>
                 </div>
-            </div>
-            <div>
-                <p>Currencies</p>
-                <div class="row">
-                    <form enctype="multipart/form-data" action="/settings/import/currencies" method="post">
-                        <div class="col-md-10">
+                <div class="row mb-3">
+                    <form action="/settings/import/currencies" class="form-inline" enctype="multipart/form-data"
+                          method="post">
+                        <div class="col">
                             <div class="form-group">
-                                <input type="file" name="file">
+                                <label for="file-currencies">Currencies</label>
+                                <input id="file-currencies" name="file" type="file">
                             </div>
                         </div>
-                        <div class="col-md-2">
-                            <div class="float-right">
-                                <button class="btn btn-primary" type="submit">Import</button>
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-jh-primary" type="submit">Import</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row mb-3">
+                    <form action="/settings/import/currency-map" class="form-inline" enctype="multipart/form-data"
+                          method="post">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="file-currency-map">Currency Map</label>
+                                <input id="file-currency-map" name="file" type="file">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <button class="btn btn-jh-primary" type="submit">Import</button>
                             </div>
                         </div>
                     </form>

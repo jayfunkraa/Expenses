@@ -1,8 +1,8 @@
-@media (max-width: 979px) {
+/*@media (max-width: 979px) {
   body {
     padding-top: 0px;
   }
-}
+}*/
 
 @font-face {
     font-family: 'Cubano-Regular';
@@ -27,8 +27,38 @@ td {
 	vertical-align: baseline;
 }
 
+.bg-jh-primary {
+    background-color: #993366;
+}
+
+.btn-jh-primary {
+    background-color: #993366;
+    border-color: #993366;
+    color: white;
+}
+
+.text-jh-primary {
+    color: #993366;
+}
+
+.bg-jh-secondary {
+    background-color: #e6b3cc;
+}
+
+.btn-jh-secondary {
+    background-color: #e6b3cc;
+    border-color: #e6b3cc;
+    color: white;
+}
+
+.text-jh-secondary {
+    color: #e6b3cc;
+}
+
 .setting {
     position:absolute;
     left:0;
     bottom:0;
 }
+
+

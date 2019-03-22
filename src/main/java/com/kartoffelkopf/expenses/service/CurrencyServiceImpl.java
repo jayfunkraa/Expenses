@@ -12,6 +12,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,6 +44,19 @@ public class CurrencyServiceImpl implements CurrencyService {
         currency.setDefaultCurrency(true);
         currencyDao.save(currency);
 
+    }
+
+    @Override
+    public Currency getReportCurrency() {
+        List<Currency> currencies = new ArrayList<>();
+        for (Currency currency : findAll()) {
+            if (currency.isReportCurrency()) {
+                currencies.add(currency);
+            }
+        }
+        if (currencies.size() == 1) {
+            return currencies.get(0);
+        } else return null;
     }
 
     @Override
@@ -85,5 +99,18 @@ public class CurrencyServiceImpl implements CurrencyService {
                 currency.setDefaultCurrency(false);
                 currencyDao.save(currency);
             }
+    }
+
+    @Override
+    public Currency findByCurrency(String currencyCode) {
+        List<Currency> currencies = new ArrayList<>();
+        for (Currency currency : findAll()) {
+            if (currency.getCurrency().equals(currencyCode)) {
+                currencies.add(currency);
+            }
+        }
+        if (currencies.size() == 1) {
+            return currencies.get(0);
+        } else return null;
     }
 }

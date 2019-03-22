@@ -32,6 +32,7 @@ public class ReportController {
 
     @RequestMapping(value = "/report", method = RequestMethod.POST)
     public String addPost(Report report) {
+        report.setCurrency(reportService.getReportCurrency());
         reportService.save(report);
         return "redirect:/reports";
     }

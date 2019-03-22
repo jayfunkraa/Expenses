@@ -30,11 +30,11 @@ public class Expense {
     private Client client;
 
     @OneToOne
+    @JoinColumn(name = "report_id")
     private Report report;
 
     @OneToOne
     private Receipt receipt;
-
 
     public Expense() {
         this.date = LocalDate.now();

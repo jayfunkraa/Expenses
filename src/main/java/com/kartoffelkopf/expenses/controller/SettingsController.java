@@ -62,4 +62,14 @@ public class SettingsController {
         return "redirect:/settings";
     }
 
+    @RequestMapping(value = "/settings/import/currency-map", method = RequestMethod.POST)
+    public String importCurrencyMap(@RequestParam MultipartFile file) {
+        if (!file.isEmpty()) {
+            settingsService.importCurrencyMap(file);
+        } else {
+            System.err.println("No file found");
+        }
+        return "redirect:/settings";
+    }
+
 }
