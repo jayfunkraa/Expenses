@@ -46,8 +46,17 @@
         <div class="col-md-2 mb-1">
             <p class="mb-0 pb-0" th:text="${expense.merchant}"></p>
             <a class="text-decoration-none" th:href="@{'/report/' + ${expense.report.id} + '/expenses'}">
-                <small th:class="@{${#strings.equals(expense.report.type, 'Unreported')} ? 'border p-1 bg-white text-muted' : 'p-1 bg-jh-primary text-light'}"
-                       th:text="${expense.report.title}"></small>
+                <th:block th:switch="${expense.report.type}">
+                    <div th:case="'Unreported'">
+                        <small class="border p-1 bg-white text-muted" th:text="${expense.report.type}"></small>
+                    </div>
+                    <div th:case="'Coutts'">
+                        <small class="p-1 bg-secondary text-light" th:text="${expense.report.type}"></small>
+                    </div>
+                    <div th:case="'Personal'">
+                        <small class="p-1 bg-jh-primary text-light" th:text="${expense.report.type}"></small>
+                    </div>
+                </th:block>
             </a>
         </div>
         <div class="col-md-1">
@@ -117,6 +126,8 @@ $(document).ready(function () {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
+
+
 
 
 
