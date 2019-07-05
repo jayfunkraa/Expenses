@@ -1,5 +1,6 @@
 package com.kartoffelkopf.expenses.service;
 
+import com.kartoffelkopf.expenses.model.Currency;
 import com.kartoffelkopf.expenses.model.CurrencyMap;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -16,4 +17,6 @@ public interface CurrencyMapService {
     void delete(CurrencyMap currencyMap);
 
     void importFromCsv(MultipartFile file) throws IOException;
+
+    double getRate(Currency from, Currency to);
 }

@@ -70,6 +70,7 @@
                             Expenses</a>
                         <a class="dropdown-item" th:href="@{'/report/' + ${report.id}} + '/submit'"
                            th:unless="${report.submitted} or ${report.type == 'Unreported'}">Submit Report</a>
+                        <a class="dropdown-item" th:href="@{'/report/' + ${report.id} + '/generate'}">Generate Excel</a>
                     </div>
                 </div>
             </div>

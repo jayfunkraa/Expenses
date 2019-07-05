@@ -3,11 +3,14 @@ package com.kartoffelkopf.expenses.controller;
 import com.kartoffelkopf.expenses.model.Report;
 import com.kartoffelkopf.expenses.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import java.io.IOException;
 
 @Controller
 public class ReportController {
@@ -71,4 +74,14 @@ public class ReportController {
         return "report/expenses";
     }
 
-}
+    @RequestMapping("/report/{id}/generate")
+    public ResponseEntity<byte[]> reportGetExcel(@PathVariable long id) {
+        Report report = reportService.findById(id);
+        try {
+            return reportService.generateExcel(report);
+        } catch (IOException e) {
+            System.err.println("IOException thrown during excel generation");
+            return null;
+        }
+    }
+    }

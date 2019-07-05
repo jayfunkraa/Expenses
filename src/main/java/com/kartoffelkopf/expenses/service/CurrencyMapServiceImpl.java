@@ -69,4 +69,16 @@ public class CurrencyMapServiceImpl implements CurrencyMapService {
             }
         }
     }
+
+    @Override
+    public double getRate(Currency from, Currency to) {
+
+        for (CurrencyMap currencyMap : findAll()) {
+            if (currencyMap.getFrom() == from && currencyMap.getTo() == to) {
+                return currencyMap.getRate();
+            }
+        }
+        return 0;
+    }
+
 }

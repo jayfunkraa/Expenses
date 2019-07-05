@@ -4,7 +4,9 @@ import com.kartoffelkopf.expenses.model.Currency;
 import com.kartoffelkopf.expenses.model.Expense;
 import com.kartoffelkopf.expenses.model.Report;
 import com.kartoffelkopf.expenses.model.ReportView;
+import org.springframework.http.ResponseEntity;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ReportService {
@@ -29,4 +31,6 @@ public interface ReportService {
     Currency getReportCurrency();
 
     Report getUnreportedReport();
+
+    ResponseEntity<byte[]> generateExcel(Report report) throws IOException;
 }
